@@ -30,22 +30,26 @@ function App() {
       </section>
 
       {/* Step 2 */}
-      <section className='step'>
-        <h2>Step <span>2</span></h2>
-        <p className='instructions'>Click the generate button</p>
-        <div className='input-container'>
-          <button onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</button>
-        </div>
-      </section>
+      {scheduleText && 
+        <section className='step'>
+          <h2>Step <span>2</span></h2>
+          <p className='instructions'>Click the generate button</p>
+          <div className='input-container'>
+            <button onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</button>
+          </div>
+        </section>
+      }
       
 
       {/* Step 3 */}
+      {schedule.status != "empty" &&
         <section className='step'>
           <h2>Step <span>3</span></h2>
-          <p className='instructions'>Screenshot the Schedule, if you didn't get a proper schedule please reload the page and try again.</p>
+          <p className='instructions'>Screenshot the Schedule, if you didn't get a proper schedule or want to try again please reload the page.</p>
           {/* Schedule generation */}
-          <Schedule scheduleData={DEMO} />
+          <Schedule scheduleData={scheduleText} />
         </section>
+      }
     </>
   )
 }
