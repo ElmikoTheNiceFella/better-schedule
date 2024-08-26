@@ -58,7 +58,7 @@ export const getCourseData = (data) => {
     }
   }
 
-  console.log(schedule)
+  return schedule
 }
 
 /* ---------------- */
