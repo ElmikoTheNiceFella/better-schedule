@@ -1,88 +1,10 @@
-const demoData = `
-Arabic Language I | Arabic Language 100 Section L09 | Class Begin: 08/25/2024 | Class End: 12/05/2024
-Registered
-08/25/2024 -- 12/05/2024   Sunday,Tuesday
-S
-M
-T
-W
-T
-F
-S
-   03:30 PM - 04:45 PM Type: Class Location: All Building: I09- College of Law Room: A110
-Instructor: ElKhrashy, Youssry (Primary)
-CRN: 11045
-Calculus I | Mathematics 101 Section L01 | Class Begin: 08/25/2024 | Class End: 12/05/2024
-Registered
-08/25/2024 -- 12/05/2024   Sunday,Tuesday,Thursday
-S
-M
-T
-W
-T
-F
-S
-   12:00 PM - 12:50 PM Type: Class Location: Male Designated Area Building: BCR- Corridor Room: I111
-Instructor: El-Sanfaz, Mustafa (Primary)
-CRN: 11333
-Calculus I | Mathematics 101 Section B02 | Class Begin: 08/25/2024 | Class End: 12/05/2024
-Registered
-08/25/2024 -- 12/05/2024   Thursday
-S
-M
-T
-W
-T
-F
-S
-   01:00 PM - 01:50 PM Type: Lab Location: Male Designated Area Building: BCR- Corridor Room: I110
-Instructor: Dabboorasad, Yousef (Primary)
-CRN: 11668
-History of Qatar | History 121 Section L06 | Class Begin: 08/25/2024 | Class End: 12/05/2024
-Registered
-08/25/2024 -- 12/05/2024   Sunday,Tuesday,Thursday
-S
-M
-T
-W
-T
-F
-S
-   05:00 PM - 05:50 PM Type: Class Location: All Building: H08- Business & Econ. Bldg. Room: D107
-Instructor: Hayajneh, Raed (Primary)
-CRN: 10590
-Introduction to Psychology | Education Psychology 201 Section L01 | Class Begin: 08/25/2024 | Class End: 12/05/2024
-Registered
-08/25/2024 -- 12/05/2024   Monday,Wednesday
-S
-M
-T
-W
-T
-F
-S
-   03:30 PM - 04:45 PM Type: Class Location: All Building: I10- College of Education Room: C202
-Instructor: ElSawaf, Mona
-CRN: 12787
-Islamic Culture | Dawa 111 Section L05 | Class Begin: 08/25/2024 | Class End: 12/05/2024
-Registered
-08/25/2024 -- 12/05/2024   Monday,Wednesday
-S
-M
-T
-W
-T
-F
-S
-   05:00 PM - 06:15 PM Type: Class Location: All Building: H08- Business & Econ. Bldg. Room: D214
-Instructor: Laabdi, Mourad (Primary)
-CRN: 12009`
+import { COLORS } from "./constants";
 
 /* ------------- */
 /* MAIN FUNCTION */
 /* ------------- */
 
-const getCourseData = (data) => {
+export const getCourseData = (data) => {
   const regexes = {
     days: /\d{2}\/\d{2}\/\d{2}/,
     timing: /\d{2}\:\d{2}\s(PM|AM)\s\-\s\d{2}\:\d{2}\s(PM|AM)/
@@ -125,6 +47,10 @@ const getCourseData = (data) => {
       // Get margin & height
       [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
 
+      // Get color
+      courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
+
+      // Add the course to the schedule
       for (let day of courseDays) {
         schedule[day].push(courseData)
       }
