@@ -87,31 +87,71 @@ function timingToNum(timing) {
 }
 
 export function getMinTiming(schedule) {
-  let minTiming;
-  let counter = 0;
+
+  let minTiming
+  let startTime
+  let counter = 0
 
   for(let day of Object.keys(schedule)) {
     for(let course of schedule[day]) {
-      if (counter == 0) minTiming = timingToNum(course.timing[0])
-      else if (minTiming > timingToNum(course.timing[0])) minTiming = timingToNum(course.timing[0])
+      if (counter == 0 || minTiming > timingToNum(course.timing[0])) {
+        minTiming = timingToNum(course.timing[0])
+        startTime = course.timing[0]
+      }
       counter++
     }
   }
 
-  return minTiming * 100
+  return [minTiming * 100, startTime]
 }
 
 export function getScheduleHeight(schedule) {
-  let maxTiming;
-  let counter = 0;
+
+  let maxTiming
+  let endTime
+  let counter = 0
 
   for (let day of Object.keys(schedule)) {
     for (let course of schedule[day]) {
-      if (counter == 0) maxTiming = timingToNum(course.timing[1])
-      else if (maxTiming < timingToNum(course.timing[1])) maxTiming = timingToNum(course.timing[1])
+      if (counter == 0 || maxTiming < timingToNum(course.timing[1])) {
+        maxTiming = timingToNum(course.timing[1])
+        endTime = course.timing[1]
+      }
       counter++
     }
   }
 
-  return (maxTiming * 100) - getMinTiming(schedule)
+  return [(maxTiming * 100) - getMinTiming(schedule), endTime]
 }
+
+function numToTiming(num, offset) {
+  let suffix = "AM"
+  let hours = Math.floor(num)
+  let height = (num % 1 == 0 ? 1 : num % 1) * offset
+
+  if (hours >= 12) {
+    suffix = "PM"
+    hours -= (hours == 12 ? 0 : 12)
+  }
+  
+  const result = ("" + hours).padStart(2, '0') + ":00 " + suffix
+
+  return [result, height]
+}
+
+function getBackgroundTimings(startTime, endTime, offset=100) {
+  let duration = timingToNum(endTime) - timingToNum(startTime)
+  let counter = 1;
+  let finalTimings = [numToTiming(timingToNum(endTime), offset)]
+  endTime = numToTiming(timingToNum(endTime), offset)[0]
+
+  while(duration > 1) {
+    finalTimings.unshift(numToTiming(timingToNum(endTime) - counter, offset))
+    counter++
+    duration--
+  }
+
+  return finalTimings
+}
+
+console.log(getBackgroundTimings("12:00 PM", "05:15 PM"))

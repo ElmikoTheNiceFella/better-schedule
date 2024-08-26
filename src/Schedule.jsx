@@ -14,14 +14,14 @@ const Schedule = ({ scheduleData }) => {
 
   useEffect(() => {
     const scheduleInfo = getCourseData(scheduleData)
+    const [minTiming, scheduleHeight] = [getMinTiming(scheduleInfo)[0], getScheduleHeight(scheduleInfo)[0]]
 
     setSchedule(scheduleInfo)
-    setMinTimingMargin(getMinTiming(scheduleInfo))
-    setScheduleHeight(getScheduleHeight(scheduleInfo))
+    setMinTimingMargin(minTiming)
+    setScheduleHeight(scheduleHeight)
   }, [])
 
   return (
-    scheduleData.status != "empty" &&
     <div className={styles.scheduleContainer}>
       {Object.keys(schedule).map(day => 
         <div className={styles.day} style={{ borderRight: day != "Thursday" ? "none" : "1px solid #6c757d" }}>
@@ -29,7 +29,7 @@ const Schedule = ({ scheduleData }) => {
           <div className={styles.courseContainer} style={{ height: scheduleHeight }}>
             {schedule[day].map(course => 
               <div className={styles.course} style={{ backgroundColor: course.color, marginTop: (course.margin * 100) - minTimingMargin, height: course.height* 100 }}>
-                <p className={styles.courseInfo}>{course.name} - {course.type}<br /><br />{course.timing[0]} - {course.timing[1]}<br />Bldg. {course.building} - Room: {course.room}</p>
+                <p className={styles.courseInfo}><span className={styles.bold}>{course.name} - {course.type}</span><br />{course.timing[0]} - {course.timing[1]}<br />Bldg. <span className={styles.bold}>{course.building}</span> - Room: <span className={styles.bold}>{course.room}</span></p>
               </div>
             )}
           </div>

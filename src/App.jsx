@@ -1,6 +1,6 @@
 import './App.css'
 import { getCourseData } from '../functions'
-import { TUTORIAL_LINK } from '../constants'
+import { TUTORIAL_LINK, DEMO } from '../constants'
 import Schedule from './Schedule'
 import { useState } from 'react'
 
@@ -30,25 +30,22 @@ function App() {
       </section>
 
       {/* Step 2 */}
-      {scheduleText && 
-        <section className='step'>
-          <h2>Step <span>2</span></h2>
-          <p className='instructions'>Click the generate button</p>
-          <div className='input-container'>
-            <button onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</button>
-          </div>
-        </section>
-      }
+      <section className='step'>
+        <h2>Step <span>2</span></h2>
+        <p className='instructions'>Click the generate button</p>
+        <div className='input-container'>
+          <button onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</button>
+        </div>
+      </section>
+      
 
       {/* Step 3 */}
-      {schedule.status != "empty" && 
         <section className='step'>
           <h2>Step <span>3</span></h2>
           <p className='instructions'>Screenshot the Schedule, if you didn't get a proper schedule please reload the page and try again.</p>
           {/* Schedule generation */}
-          <Schedule scheduleData={scheduleText} />
+          <Schedule scheduleData={DEMO} />
         </section>
-      }
     </>
   )
 }

@@ -24,7 +24,12 @@
   align-items: center;
   width: 100%;
 }
+.bold {
+  font-weight: 500;
+  font-size: 15px;
+}
 .course > p {
+  width: 80%;
   color: white;
   font-weight: 300;
 }
