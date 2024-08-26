@@ -24,7 +24,7 @@ export const getCourseData = (data) => {
   for(let line of data.split("\n")) {
     if (line.includes("|")) {
       // Get course name
-      courseData.name = line.substring(0, line.indexOf("|"))
+      courseData.name = line.substring(0, line.indexOf("|")).trim()
 
     } else if (regexes.days.test(line)) {
       // Get days of the course

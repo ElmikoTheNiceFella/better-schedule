@@ -7,7 +7,9 @@ export const COLORS = {
   "I09": "#343a40"
 }
 
-export const demoData = `
+export const TUTORIAL_LINK = "https://www.youtube.com/watch?v=fOA93H6UEnc"
+
+export const DEMO_DATA = `
 Arabic Language I | Arabic Language 100 Section L09 | Class Begin: 08/25/2024 | Class End: 12/05/2024
 Registered
 08/25/2024 -- 12/05/2024   Sunday,Tuesday
