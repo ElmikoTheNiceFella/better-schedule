@@ -5,8 +5,26 @@
 }
 .day {
   width: 200px;
+  border-top: 1px solid #6c757d;
+  border-left: 1px solid #6c757d;
+  border-bottom: 1px solid #6c757d;
 }
 .dayName {
   font-weight: 500;
   text-align: center;
+}
+.courseContainer {
+  position: relative;
+  height: fit-content;
+}
+.course {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.course > p {
+  color: white;
+  font-weight: 300;
 }

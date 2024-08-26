@@ -29,6 +29,9 @@ h2 > span {
 p {
   color: #343a40;
 }
+.instructions {
+  padding: 0px 24px;
+}
 a:active, a:visited, a {
   color: #8e1837;
 }
