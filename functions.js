@@ -121,7 +121,7 @@ export function getScheduleHeight(schedule) {
     }
   }
 
-  return [(maxTiming * 100) - getMinTiming(schedule), endTime]
+  return [(maxTiming * 100) - getMinTiming(schedule)[0], endTime]
 }
 
 function numToTiming(num, offset) {
@@ -139,7 +139,7 @@ function numToTiming(num, offset) {
   return [result, height]
 }
 
-function getBackgroundTimings(startTime, endTime, offset=100) {
+export function getBackgroundTimings(startTime, endTime, offset=100) {
   let duration = timingToNum(endTime) - timingToNum(startTime)
   let counter = 1;
   let finalTimings = [numToTiming(timingToNum(endTime), offset)]
@@ -153,5 +153,3 @@ function getBackgroundTimings(startTime, endTime, offset=100) {
 
   return finalTimings
 }
-
-console.log(getBackgroundTimings("12:00 PM", "05:15 PM"))

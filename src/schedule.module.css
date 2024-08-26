@@ -1,4 +1,5 @@
 .scheduleContainer {
+  position: relative;
   display: flex;
   width: fit-content;
   margin: auto;
@@ -7,7 +8,6 @@
   width: 200px;
   border-top: 1px solid #6c757d;
   border-left: 1px solid #6c757d;
-  border-bottom: 1px solid #6c757d;
 }
 .dayName {
   font-weight: 500;
@@ -16,6 +16,7 @@
 .courseContainer {
   position: relative;
   height: fit-content;
+  z-index: 2;
 }
 .course {
   position: absolute;
@@ -32,4 +33,27 @@
   width: 80%;
   color: white;
   font-weight: 300;
+}
+.timesContainer {
+  width: 1080px;
+  top: 63px;
+  left: -80px;
+  position: absolute;
+}
+.time {
+  position: absolute;
+  padding-left: 4px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #6c757d;
+}
+.bottom {
+  width: 1085px;
+  position: absolute;
+  z-index: 5;
+  height: 1px;
+  left: -80px;
+  background-color: #6c757d;
+  bottom: -1px;
 }
