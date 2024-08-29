@@ -4,6 +4,7 @@ const COLORS = {
   "H12": "#1a8e18",
   "C11": "#1a8e18",
   "B05": "#55188e",
+  "B06": "#8e5f18",
   "I09": "#343a40"
 }
 
@@ -65,7 +66,7 @@ Sunday,Tuesday,Thursday
     F
     S
 
-   05:00 PM - 05:50 PM Type: Class Location: All Building: H08- Business & Econ. Bldg. Room: D107
+   17:00 - 17:50 Type: Class Location: All Building: H08- Business & Econ. Bldg. Room: D107
 Instructor: Hayajneh, Raed (Primary)
 CRN: 10590
 Introduction to Psychology | Education Psychology 201 Section L01 | Class Begin: 08/25/2024 | Class End: 12/05/2024
