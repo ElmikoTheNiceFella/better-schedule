@@ -34,7 +34,6 @@ export const getCourseData = (data) => {
       } else if (regexes.timing.test(line)) {
         const information = line.split(/Type: |Building: |Room: /)
         // Get timing
-        console.log(information)
         courseData.timing = information[0].trim().split(" - ").map(timing => toAmPM(timing))
 
         // Get type
@@ -61,7 +60,6 @@ export const getCourseData = (data) => {
     }
     return schedule
   } catch (e) {
-    console.log(e.message)
     return schedule
   }
 }
@@ -80,7 +78,6 @@ const marginHeightCalculator = (timing) => {
 
 function timingToNum(timing) {
   timing = toAmPM(timing)
-  console.log(timing + "NIGGERs")
   let hours = +timing.substring(0, 2);
   let minutes = +timing.substring(3, 5) / 60;
 
@@ -166,4 +163,3 @@ const toAmPM = (timing) => {
   }
   return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + " " + suffix
 }
-console.log(getCourseData(DEMO))
