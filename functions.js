@@ -1,4 +1,4 @@
-import { COLORS } from "./constants.js";
+import { COLORS, DEMO } from "./constants.js";
 
 /* ------------- */
 /* MAIN FUNCTION */
@@ -6,7 +6,7 @@ import { COLORS } from "./constants.js";
 
 export const getCourseData = (data) => {
   const regexes = {
-    days: /\d{2}\/\d{2}\/\d{2}/,
+    days: /Sunday|Monday|Tuesday|Wednesday|Thursday/g,
     timing: /\d{2}\:\d{2}\s(PM|AM)\s\-\s\d{2}\:\d{2}\s(PM|AM)/
   }
 
@@ -29,7 +29,7 @@ export const getCourseData = (data) => {
     
         } else if (regexes.days.test(line)) {
           // Get days of the course
-          courseDays = line.split("   ")[1].split(",")
+          courseDays = [...line.match(regexes.days)]
     
         } else if (regexes.timing.test(line)) {
           const information = line.split(/Type: |Building: |Room: /)
@@ -153,3 +153,5 @@ export function getBackgroundTimings(startTime, endTime, offset=100) {
 
   return finalTimings
 }
+
+console.log(getCourseData(DEMO))
