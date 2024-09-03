@@ -18,7 +18,7 @@ export const getCourseData = (data) => {
     "Thursday": [],
   }
 
-  let courseDays;
+  let courseDays = [];
   let courseData = {};
 
   try {
@@ -29,8 +29,7 @@ export const getCourseData = (data) => {
 
       } else if (regexes.days.test(line)) {
         // Get days of the course
-        courseDays = [...line.match(regexes.days)]
-
+        courseDays = courseDays.concat([...line.match(regexes.days)])
       } else if (regexes.timing.test(line)) {
         const information = line.split(/Type: |Building: |Room: /)
         // Get timing
@@ -163,3 +162,5 @@ const toAmPM = (timing) => {
   }
   return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + " " + suffix
 }
+
+console.log(getCourseData(DEMO))
