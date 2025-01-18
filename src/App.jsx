@@ -9,15 +9,12 @@ function App() {
   const [scheduleText, setScheduleText] = useState("")
   const [schedule, setSchedule] = useState({ status: "empty" })
 
-  const handleGenerate = () => {
-    setSchedule(getCourseData(scheduleText))
-    console.log(getCourseData(scheduleText))
-  }
+  const handleGenerate = () => setSchedule(getCourseData(scheduleText))
 
   return (
     <>
       {/* Title */}
-      <h1>QU&nbsp;<span>Better Schedule</span>&nbsp;<button style={{ width:"50px", height: "40px" }}>EN</button></h1>
+      <h1>QU&nbsp;<span>Better Schedule</span></h1>
 
       {/* Step 1 */}
       <section className='step'>
