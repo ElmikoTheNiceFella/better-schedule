@@ -32,6 +32,8 @@ export const getCourseData = (data) => {
 
   try {
     for (let line of data.split("\n")) {
+      line = line.trim()
+      if (line.length <= 0) continue
       if (regexes.name.test(line)) {
         // --- Push Each Course Data To The Schedule ---
         if (courseDays.length > 0) {
@@ -81,9 +83,7 @@ export const getCourseData = (data) => {
       courseData = {}
     }
     return schedule
-  } catch (e) {
-    console.log("Data conversion error: "+ e.message)
-    return schedule
+  } catch (e) {    return schedule
   }
 }
 
@@ -92,9 +92,7 @@ export const getCourseData = (data) => {
 /* ---------------- */
 
 // Calculating margins & heights
-const marginHeightCalculator = (timing) => {
-  console.log(timing)
-  const margin = timingToNum(timing[0])
+const marginHeightCalculator = (timing) => {  const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 
   return [margin, height]
@@ -187,5 +185,3 @@ const toAmPM = (timing) => {
   }
   return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + suffix
 }
-
-console.log(getCourseData(DEMO))

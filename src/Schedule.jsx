@@ -24,13 +24,13 @@ const Schedule = ({ scheduleData }) => {
   }, [])
 
   return (
-    <div className={styles.scheduleContainer}>
-      {Object.keys(schedule).map(day => 
-        <div key={day} className={styles.day} style={{ borderRight: day != "Thursday" ? "none" : "1px solid #6c757d" }}>
+    <div id="schedule" className={styles.scheduleContainer}>
+      {Object.keys(schedule).map((day, j) => 
+        <div key={day+`${j}`} className={styles.day} style={{ borderRight: day != "Thursday" ? "none" : "1px solid #6c757d" }}>
           <h4 className={styles.dayName} >{day}</h4>
           <div className={styles.courseContainer} style={{ height: scheduleHeight }}>
-            {schedule[day].map(course => 
-              <div key={course.timing[0]} className={styles.course} style={{ backgroundColor: course.color, top: (course.margin * 100) - minTimingMargin, height: course.height * 100 }}>
+            {schedule[day].map((course, k) => 
+              <div key={course.timing[0]+`${k}`} className={styles.course} style={{ backgroundColor: course.color, top: (course.margin * 100) - minTimingMargin, height: course.height * 100 }}>
                 <p className={styles.courseInfo}><span className={styles.bold}>{course.name} - {course.type}</span><br />{course.timing[0]} - {course.timing[1]}<br />Bldg. <span className={styles.bold}>{course.building}</span> - Room: <span className={styles.bold}>{course.room}</span></p>
               </div>
             )}
@@ -38,7 +38,7 @@ const Schedule = ({ scheduleData }) => {
         </div>
       )}
       <div className={styles.timesContainer}>
-        {times.map((time, i) => <div key={i} className={styles.time} style={{ height: time[1], top: i * 100, borderBottom: times.length == 3 ? "1px solid #6c757d" : "none" }}>{time[0]}</div>)}
+        {times.map((time, i) => <div key={time[0]+`${i}`} className={styles.time} style={{ height: time[1], top: i * 100, borderBottom: times.length == 3 ? "1px solid #6c757d" : "none" }}>{time[0]}</div>)}
       </div>
       <div className={styles.bottom}></div>
     </div>

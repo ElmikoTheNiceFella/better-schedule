@@ -35,7 +35,7 @@ function App() {
           <h2>Step <span>2</span></h2>
           <p className='instructions'>Click the generate button</p>
           <div className='input-container'>
-            <button onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</button>
+            <a href="#schedule" id='generate' onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</a>
           </div>
         </section>
       }
