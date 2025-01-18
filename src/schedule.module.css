@@ -27,7 +27,9 @@
 }
 .bold {
   font-weight: 500;
-  font-size: 15px;
+}
+.courseInfo {
+  font-size: 14px;
 }
 .course > p {
   width: 80%;

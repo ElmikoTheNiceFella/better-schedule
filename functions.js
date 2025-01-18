@@ -1,17 +1,26 @@
-import { COLORS, DEMO } from "./constants.js";
+import { COLORS, DAYS, DEMO } from "./constants.js";
 
 /* ------------- */
 /* MAIN FUNCTION */
 /* ------------- */
 
+function indexOfSemester(string) {
+  if (string.includes("Spring")) return string.indexOf("Spring")
+  if (string.includes("Fall")) return string.indexOf("Fall")
+  if (string.includes("Summer")) return string.indexOf("Summer")
+  if (string.includes("Winter")) return string.indexOf("Winter")
+}
+
 export const getCourseData = (data) => {
   const regexes = {
-    days: /Sunday|Monday|Tuesday|Wednesday|Thursday/g,
-    timing: /\d{2}\:\d{2}(\s(PM|AM))?\s\-\s\d{2}\:\d{2}(\s(PM|AM))?/
+    name: /Fall|Spring|Summer|Winter/,
+    codeType: /[A-Z]{4,5}\s[0-9]{3}/,
+    daysTiming: /(Sun|Mon|Tues|Wed|Thu)(\,|\s)/,
+    roomBuilding: /([A-Z]{1}[0-9]{2}|[A-Z]{3})\-\s/
   }
 
   let schedule = {
-    "Sunday": [],
+    "Sunday": [], // [{*name, *type, building, color, height, margin, room, *timing: [XX:XX AM], type}, ...]
     "Monday": [],
     "Tuesday": [],
     "Wednesday": [],
@@ -23,42 +32,57 @@ export const getCourseData = (data) => {
 
   try {
     for (let line of data.split("\n")) {
-      if (line.includes("|")) {
-        // Get course name
-        courseData.name = line.substring(0, line.indexOf("|")).trim()
-
-      } else if (regexes.days.test(line)) {
-        // Get days of the course
-        courseDays = courseDays.concat([...line.match(regexes.days)])
-      } else if (regexes.timing.test(line)) {
-        const information = line.split(/Type: |Building: |Room: /)
-        // Get timing
-        courseData.timing = information[0].trim().split(" - ").map(timing => toAmPM(timing))
-
-        // Get type
-        courseData.type = information[1].split(" ")[0] == "Class" ? "LEC" : "LAB"
-
-        // Get building
-        courseData.building = information[2].substring(0, information[2].indexOf("-"))
-
-        // Get room
-        courseData.room = information[3]
-      } else if (line.includes("CRN")) {
-        // Get margin & height
-        [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
-
-        // Get color
-        courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
-
-        // Add the course to the schedule
-        for (let day of courseDays) {
-          schedule[day].push(courseData)
+      if (regexes.name.test(line)) {
+        // --- Push Each Course Data To The Schedule ---
+        if (courseDays.length > 0) {
+          // Get margin & height
+          [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
+  
+          // Get color
+          courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
+  
+          // Add the course to the schedule
+          for (let day of courseDays) {
+            schedule[day].push(courseData)
+          }
+          courseData = {}
         }
-        courseData = {}
+        // Get course name
+        courseData.name = line.substring(0, indexOfSemester(line)).trim()
+      } else if (regexes.codeType.test(line)) {
+        // Get Type & Section
+        courseData.type = line.split("/").map(x => x.trim())[1]
+      } else if (regexes.daysTiming.test(line)) {
+        // Get days of the course
+        const info = line.split(" ")
+        courseDays = info[0].trim().split(",").map((x) => DAYS[x])
+        // Get Timing
+        info.shift()
+        courseData.timing = info.join("").split("-").map((x) => toAmPM(x))
+      } else if (regexes.roomBuilding.test(line)) {
+        // Get Room & Building
+        const info = line.split(" ")
+        courseData.building = info[0].substring(0, info[0].length-1)
+        courseData.room = info[info.length-1]
       }
+    }
+    // --- Conclude Course Data ---
+    if (courseDays.length > 0) {
+      // Get margin & height
+      [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
+
+      // Get color
+      courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
+
+      // Add the course to the schedule
+      for (let day of courseDays) {
+        schedule[day].push(courseData)
+      }
+      courseData = {}
     }
     return schedule
   } catch (e) {
+    console.log("Data conversion error: "+ e.message)
     return schedule
   }
 }
@@ -69,6 +93,7 @@ export const getCourseData = (data) => {
 
 // Calculating margins & heights
 const marginHeightCalculator = (timing) => {
+  console.log(timing)
   const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 
@@ -80,7 +105,7 @@ function timingToNum(timing) {
   let hours = +timing.substring(0, 2);
   let minutes = +timing.substring(3, 5) / 60;
 
-  if (timing.substring(6, 8) == "PM" && hours != 12) hours += 12
+  if (timing.substring(5, 7) == "PM" && hours != 12) hours += 12
 
   return hours + minutes
 }
@@ -133,7 +158,7 @@ function numToTiming(num, offset) {
     hours -= (hours == 12 ? 0 : 12)
   }
 
-  const result = ("" + hours).padStart(2, '0') + ":00 " + suffix
+  const result = ("" + hours).padStart(2, '0') + ":00" + suffix
 
   return [result, height]
 }
@@ -160,7 +185,7 @@ const toAmPM = (timing) => {
     suffix = "PM"
     hours -= (hours > 12 ? 12 : 0)
   }
-  return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + " " + suffix
+  return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + suffix
 }
 
 console.log(getCourseData(DEMO))

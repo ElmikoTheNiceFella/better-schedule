@@ -9,7 +9,10 @@ function App() {
   const [scheduleText, setScheduleText] = useState("")
   const [schedule, setSchedule] = useState({ status: "empty" })
 
-  const handleGenerate = () => setSchedule(getCourseData(scheduleText))
+  const handleGenerate = () => {
+    setSchedule(getCourseData(scheduleText))
+    console.log(getCourseData(scheduleText))
+  }
 
   return (
     <>

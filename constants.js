@@ -7,111 +7,56 @@ const COLORS = {
   "B06": "#8e5f18",
   "I09": "#343a40"
 }
+const DAYS = {
+   "Sun": "Sunday",
+   "Mon": "Monday",
+   "Tue": "Tuesday",
+   "Wed": "Wednesday",
+   "Thu": "Thursday"
+}
 
-const DEMO = `Elementary Algebra | Mathematics 021 Section 006 | Class Begin: 25/08/2024 | Class End: 05/12/2024
-Registered
-25/08/2024 -- 05/12/2024   Tuesday,Thursday
-M
-T
-W
-T
-F
-S
-S
-   08:00 - 08:50 Type: Class Location: Male Designated Area Building: A06- Men's Foundation Room: 0103
-25/08/2024 -- 05/12/2024   Monday,Wednesday
-M
-T
-W
-T
-F
-S
-S
-   08:00 - 09:20 Type: Class Location: Male Designated Area Building: A06- Men's Foundation Room: 0103
-Instructor: Nahle, Zeina (Primary)
-CRN: 13194
-Message: *Web Registered* | Hours: 3 | Level: Foundation | Campus: Male Designated Area | Schedule Type: Lecture/Lab | Instructional Method: English | Grade Mode: Standard Letter N | Waitlist Position: 0 | Notification Expires: None
-Integrated Core Elementary | English Language & Literature C001 Section 003 | Class Begin: 25/08/2024 | Class End: 05/12/2024
-Registered
-25/08/2024 -- 05/12/2024   Sunday
-M
-T
-W
-T
-F
-S
-S
-   12:00 - 13:50 Type: Class Location: All Building: I09- College of Law Room: A208
-25/08/2024 -- 05/12/2024   Thursday
-M
-T
-W
-T
-F
-S
-S
-   12:00 - 13:50 Type: Class Location: All Building: H08- Business & Econ. Bldg. Room: D105
-25/08/2024 -- 05/12/2024   Wednesday
-M
-T
-W
-T
-F
-S
-S
-   11:00 - 12:20 Type: Class Location: All Building: I09- College of Law Room: A211
-25/08/2024 -- 05/12/2024   Tuesday
-M
-T
-W
-T
-F
-S
-S
-   12:00 - 13:50 Type: Class Location: Male Designated Area Building: B05- Main Men's Building Room: 0117
-25/08/2024 -- 05/12/2024   Monday
-M
-T
-W
-T
-F
-S
-S
-   11:00 - 12:20 Type: Class Location: All Building: I09- College of Law Room: A211
-Instructor: Abu Huzaima, Musa (Primary)
-CRN: 13805
-Reading Workshop Elementary | English Language & Literature R001 Section 004 | Class Begin: 25/08/2024 | Class End: 05/12/2024
-Registered
-25/08/2024 -- 05/12/2024   Thursday,Sunday
-M
-T
-W
-T
-F
-S
-S
-   10:00 - 10:50 Type: Class Location: Male Designated Area Building: B05- Main Men's Building Room: 0235
-25/08/2024 -- 05/12/2024   Tuesday
-M
-T
-W
-T
-F
-S
-S
-   10:00 - 10:50 Type: Class Location: Male Designated Area Building: A06- Men's Foundation Room: 0115
-25/08/2024 -- 05/12/2024   Monday,Wednesday
-M
-T
-W
-T
-F
-S
-S
-   09:30 - 10:45 Type: Class Location: Male Designated Area Building: BCR- Corridor Room: G122
-Instructor: Johari, Muhd (Primary)
-CRN: 15941`
+const DEMO = `Arabic Language II Spring 2025 - 2024 - 1
+ARAB 200/ Lecture/ L18 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Sun,Tue,Thu 09:00 AM - 09:50 AM
+I09- College of Law A122
+Calculus II Spring 2025 - 2024 - 1
+MATH 102/ Lab/ B04 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Thu 02:00 PM - 02:50 PM
+BCR- Corridor E113
+Calculus II Spring 2025 - 2024 - 1
+MATH 102/ Lecture/ L01 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Sun,Tue,Thu 01:00 PM - 01:50 PM
+BCR- Corridor E112
+English Language I Post Foundation Spring 2025 - 2024 - 1
+ENGL 202/ Lecture/ 001 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Sun,Tue,Thu 08:00 AM - 08:50 AM
+B05- Main Men's Building 0210
+First Year Seminar Spring 2025 - 2024 - 1
+UNIV 100/ Lecture/ L17 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Sun,Tue 02:00 PM - 03:15 PM
+H08- Business & Econ. Bldg. E112
+Linear Algebra Spring 2025 - 2024 - 1
+MATH 231/ Lecture/ L02 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Mon,Wed 08:00 AM - 09:15 AM
+H07- College of Engineering C115
+Statistics I Spring 2025 - 2024 - 1
+STAT 101/ Lab/ B01 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Thu 12:00 PM - 12:50 PM
+BCR- Corridor H209
+Statistics I Spring 2025 - 2024 - 1
+STAT 101/ Lecture/ L01 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Sun,Tue,Thu 10:00 AM - 10:50 AM
+BCR- Corridor D222
+`
 
 const TUTORIAL_LINK = "https://youtu.be/aMFaa-Q6E6c"
 
-export { COLORS, DEMO, TUTORIAL_LINK }
+export { COLORS, DEMO, DAYS,TUTORIAL_LINK }
