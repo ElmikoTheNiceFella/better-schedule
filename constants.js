@@ -57,6 +57,6 @@ Sun,Tue,Thu 10:00 AM - 10:50 AM
 BCR- Corridor D222
 `
 
-const TUTORIAL_LINK = "https://youtu.be/aMFaa-Q6E6c"
+const TUTORIAL_LINK = "https://youtu.be/8JiQRGCsvWY"
 
 export { COLORS, DEMO, DAYS,TUTORIAL_LINK }

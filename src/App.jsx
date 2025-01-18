@@ -1,6 +1,6 @@
 import './App.css'
 import { getCourseData } from '../functions'
-import { TUTORIAL_LINK, DEMO } from '../constants'
+import { TUTORIAL_LINK } from '../constants'
 import Schedule from './Schedule'
 import { useState } from 'react'
 
