@@ -92,7 +92,8 @@ export const getCourseData = (data) => {
 /* ---------------- */
 
 // Calculating margins & heights
-const marginHeightCalculator = (timing) => {  const margin = timingToNum(timing[0])
+const marginHeightCalculator = (timing) => {  
+  const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 
   return [margin, height]
@@ -109,7 +110,6 @@ function timingToNum(timing) {
 }
 
 export function getMinTiming(schedule) {
-
   let minTiming
   let startTime
   let counter = 0
@@ -124,7 +124,7 @@ export function getMinTiming(schedule) {
     }
   }
 
-  return [minTiming * 100, startTime]
+  return [Math.floor(minTiming) * 100, startTime]
 }
 
 export function getScheduleHeight(schedule) {
@@ -185,3 +185,7 @@ const toAmPM = (timing) => {
   }
   return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + suffix
 }
+
+console.log(getCourseData(DEMO))
+console.log(getMinTiming(getCourseData(DEMO)))
+console.log(getBackgroundTimings(getMinTiming(getCourseData(DEMO))[1], getScheduleHeight(getCourseData(DEMO))[1], 100))

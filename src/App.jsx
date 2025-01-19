@@ -39,7 +39,6 @@ function App() {
           </div>
         </section>
       }
-      
 
       {/* Step 3 */}
       {schedule.status != "empty" &&
