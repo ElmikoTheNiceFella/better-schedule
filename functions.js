@@ -41,7 +41,7 @@ export const getCourseData = (data) => {
         [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
 
         // Get color
-        courseData.color = COLORS[courseData.building] && "#8e1837"
+        courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
 
         // Add the course to the schedule
         for (let day of courseDays) {
