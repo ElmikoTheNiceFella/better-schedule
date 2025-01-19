@@ -15,41 +15,36 @@ const DAYS = {
    "Thu": "Thursday"
 }
 
-const DEMO = `Calculus III Spring 2025 - 2024 - 1
-MATH 211/ Lecture/ L03 ( Standard Letter )
+const DEMO = `Computer Architecture and Organization I Spring 2025 - 2024 - 1
+CMPE 263/ Lecture/ L02 ( Standard Letter )
 January 19, 2025 - May 08, 2025
-Sun,Tue,Thu 10:00 AM - 10:50 AM
-H07- College of Engineering C207
-Experimental General Chemistry I Spring 2025 - 2024 - 1
-CHEM 103/ Lab/ L12 ( Standard Letter )
+Sun,Tue,Thu 01:00 PM - 01:50 PM
+H07- College of Engineering BL026
+Design and Analysis of Algorithms Spring 2025 - 2024 - 1
+CMPS 323/ Lecture/ L01 ( Standard Letter )
 January 19, 2025 - May 08, 2025
-Thu 11:00 AM - 01:50 PM
-BCR- Corridor E210
-Fundamentals of Electric Circuits Spring 2025 - 2024 - 1
-ELEC 201/ Lab/ B01 ( Standard Letter )
+Mon,Wed 08:00 AM - 09:15 AM
+H07- College of Engineering BL024
+English Language II Post Foundation Spring 2025 - 2024 - 1
+ENGL 203/ Lecture/ 018 ( Standard Letter )
 January 19, 2025 - May 08, 2025
-Mon 03:30 PM - 06:20 PM
-H07- College of Engineering C347
-Fundamentals of Electric Circuits Spring 2025 - 2024 - 1
-ELEC 201/ Lecture/ L01 ( Standard Letter )
+Sun,Tue,Thu 12:00 PM - 12:50 PM
+B05- Main Men's Building 0123
+Fundamentals of Database Systems Spring 2025 - 2024 - 1
+CMPS 351/ Lecture/ L01 ( Standard Letter )
 January 19, 2025 - May 08, 2025
-Sun,Tue 11:00 AM - 11:50 AM
-H07- College of Engineering C111
-Media and Society Spring 2025 - 2024 - 1
-MCOM 103/ Lecture/ L05 ( Standard Letter )
+Sun,Tue,Thu 09:00 AM - 09:50 AM
+H07- College of Engineering B209
+Fundamentals of Database Systems Spring 2025 - 2024 - 1
+CMPS 351/ Lab/ B02 ( Standard Letter )
+January 19, 2025 - May 08, 2025
+Tue 03:30 PM - 06:20 PM
+H07- College of Engineering C209
+Probability and Statistics for Engineers Spring 2025 - 2024 - 1
+GENG 200/ Lecture/ L03 ( Standard Letter )
 January 19, 2025 - May 08, 2025
 Mon,Wed 09:30 AM - 10:45 AM
-I09- College of Law A110
-Objec-Oriented Programming Spring 2025 - 2024 - 1
-CMPS 251/ Lecture/ L02 ( Standard Letter )
-January 19, 2025 - May 08, 2025
-Mon,Wed 02:00 PM - 03:15 PM
-H07- College of Engineering BL026
-Objec-Oriented Programming Spring 2025 - 2024 - 1
-CMPS 251/ Lab/ B04 ( Standard Letter )
-January 19, 2025 - May 08, 2025
-Wed 05:00 PM - 07:50 PM
-H07- College of Engineering C250`
+H07- College of Engineering C115`
 
 const TUTORIAL_LINK = "https://youtu.be/8JiQRGCsvWY"
 

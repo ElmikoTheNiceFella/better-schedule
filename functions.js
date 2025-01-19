@@ -15,7 +15,7 @@ export const getCourseData = (data) => {
   const regexes = {
     name: /Fall|Spring|Summer|Winter/,
     codeType: /[A-Z]{4,5}\s[0-9]{3}/,
-    daysTiming: /(Sun|Mon|Tues|Wed|Thu)(\,|\s)/,
+    daysTiming: /(Sun|Mon|Tue|Wed|Thu)(\,|\s)/,
     roomBuilding: /([A-Z]{1}[0-9]{2}|[A-Z]{3})\-\s/
   }
 
@@ -30,61 +30,61 @@ export const getCourseData = (data) => {
   let courseDays = [];
   let courseData = {};
 
-  try {
-    for (let line of data.split("\n")) {
-      line = line.trim()
-      if (line.length <= 0) continue
-      if (regexes.name.test(line)) {
-        // --- Push Each Course Data To The Schedule ---
-        if (courseDays.length > 0) {
-          // Get margin & height
-          [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
-  
-          // Get color
-          courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
-  
-          // Add the course to the schedule
-          for (let day of courseDays) {
-            schedule[day].push(courseData)
-          }
-          courseData = {}
+  for (let line of data.split("\n")) {
+    console.log(line)
+    line = line.trim()
+    if (line.length <= 0) continue
+    if (regexes.name.test(line)) {
+      // --- Push Each Course Data To The Schedule ---
+      if (courseDays.length > 0) {
+        // Get margin & height
+        [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
+
+        // Get color
+        courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
+
+        // Add the course to the schedule
+        for (let day of courseDays) {
+          schedule[day].push(courseData)
         }
-        // Get course name
-        courseData.name = line.substring(0, indexOfSemester(line)).trim()
-      } else if (regexes.codeType.test(line)) {
-        // Get Type & Section
-        courseData.type = line.split("/").map(x => x.trim())[1]
-      } else if (regexes.daysTiming.test(line)) {
-        // Get days of the course
-        const info = line.split(" ")
-        courseDays = info[0].trim().split(",").map((x) => DAYS[x])
-        // Get Timing
-        info.shift()
-        courseData.timing = info.join("").split("-").map((x) => toAmPM(x))
-      } else if (regexes.roomBuilding.test(line)) {
-        // Get Room & Building
-        const info = line.split(" ")
-        courseData.building = info[0].substring(0, info[0].length-1)
-        courseData.room = info[info.length-1]
+        console.log(courseData)
+        courseData = {}
       }
+      // Get course name
+      courseData.name = line.substring(0, indexOfSemester(line)).trim()
+    } else if (regexes.codeType.test(line)) {
+      // Get Type & Section
+      courseData.type = line.split("/").map(x => x.trim())[1]
+    } else if (regexes.daysTiming.test(line)) {
+      // Get days of the course
+      const info = line.split(" ")
+      courseDays = info[0].trim().split(",").map((x) => DAYS[x])
+      // Get Timing
+      info.shift()
+      courseData.timing = info.join("").split("-").map((x) => toAmPM(x))
+    } else if (regexes.roomBuilding.test(line)) {
+      // Get Room & Building
+      const info = line.split(" ")
+      courseData.building = info[0].substring(0, info[0].length-1)
+      courseData.room = info[info.length-1]
     }
-    // --- Conclude Course Data ---
-    if (courseDays.length > 0) {
-      // Get margin & height
-      [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
-
-      // Get color
-      courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
-
-      // Add the course to the schedule
-      for (let day of courseDays) {
-        schedule[day].push(courseData)
-      }
-      courseData = {}
-    }
-    return schedule
-  } catch (e) {    return schedule
   }
+  // --- Conclude Course Data ---
+  if (courseDays.length > 0) {
+    // Get margin & height
+    [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
+
+    // Get color
+    courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
+
+    // Add the course to the schedule
+    for (let day of courseDays) {
+      schedule[day].push(courseData)
+    }
+    courseData = {}
+  }
+  return schedule
+  
 }
 
 /* ---------------- */
@@ -92,7 +92,8 @@ export const getCourseData = (data) => {
 /* ---------------- */
 
 // Calculating margins & heights
-const marginHeightCalculator = (timing) => {  
+const marginHeightCalculator = (timing) => { 
+  console.log(timing) 
   const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 
@@ -186,6 +187,6 @@ const toAmPM = (timing) => {
   return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + suffix
 }
 
-console.log(getCourseData(DEMO))
-console.log(getMinTiming(getCourseData(DEMO)))
-console.log(getBackgroundTimings(getMinTiming(getCourseData(DEMO))[1], getScheduleHeight(getCourseData(DEMO))[1], 100))
+getCourseData(DEMO)
+// console.log(getMinTiming(getCourseData(DEMO)))
+// console.log(getBackgroundTimings(getMinTiming(getCourseData(DEMO))[1], getScheduleHeight(getCourseData(DEMO))[1], 100))
