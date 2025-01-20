@@ -26,11 +26,11 @@ export const getCoursesNames = (data) => {
       course = []
     }
   }
-  
+
   return courseNames
 }
 
-export const getCourseData = (data) => {
+export const getCourseData = (data, ramadan = false) => {
   const regexes = {
     name: /Fall|Spring|Summer|Winter/,
     codeType: /[A-Z]{4,5}\s[0-9]{3}/,
@@ -84,8 +84,8 @@ export const getCourseData = (data) => {
     } else if (regexes.roomBuilding.test(line)) {
       // Get Room & Building
       const info = line.split(" ")
-      courseData.building = info[0].substring(0, info[0].length-1)
-      courseData.room = info[info.length-1]
+      courseData.building = info[0].substring(0, info[0].length - 1)
+      courseData.room = info[info.length - 1]
     }
   }
   // --- Conclude Course Data ---
@@ -103,7 +103,7 @@ export const getCourseData = (data) => {
     courseData = {}
   }
   return schedule
-  
+
 }
 
 /* ---------------- */
@@ -111,8 +111,8 @@ export const getCourseData = (data) => {
 /* ---------------- */
 
 // Calculating margins & heights
-const marginHeightCalculator = (timing) => { 
-  console.log(timing) 
+const marginHeightCalculator = (timing) => {
+  console.log(timing)
   const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 

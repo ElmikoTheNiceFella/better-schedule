@@ -23,7 +23,7 @@ const Schedule = ({ scheduleData }) => {
     setActiveCourse(() => num == activeCourse ? -1 : num)
 
   const handleColorChange = (name, type, index) => 
-    setCustomColors(p => ({...p, [name]: [type, actualColors[index]]}))
+    setCustomColors(p => ({...p, [name+type]:  actualColors[index]}))
 
   useEffect(() => {
     const scheduleInfo = getCourseData(scheduleData)
@@ -48,7 +48,7 @@ const Schedule = ({ scheduleData }) => {
                   <div key={course.timing[0] + `${k} color`} style={{ border: "1px solid #343a40", top: (course.margin * 100) - minTimingMargin - 80, display: (j*13)+k == activeCourse ? "flex" : "none", flexWrap: "wrap" }} className={styles.colorChange}>
                     {colors.map((color, idx) => <div onClick={() => handleColorChange(course.name, course.type, idx)} key={color} style={{ backgroundColor: color, width: 38, height: 38, border: "1px solid #343a40" }}></div>)}
                   </div>
-                  <div onClick={() => handleActiveCourse((j * 13) + k)} key={course.timing[0] + `${k}`} className={styles.course} style={{ backgroundColor: customColors[course.name] && customColors[course.name][0] == course.type ? customColors[course.name][1] : course.color, top: (course.margin * 100) - minTimingMargin, height: course.height * 100 }}>
+                  <div onClick={() => handleActiveCourse((j * 13) + k)} key={course.timing[0] + `${k}`} className={styles.course} style={{ backgroundColor: customColors[course.name + course.type] ? customColors[course.name + course.type] : course.color, top: (course.margin * 100) - minTimingMargin, height: course.height * 100 }}>
                     <p className={styles.courseInfo}><span className={styles.bold}>{course.name} - {course.type}</span><br />{course.timing[0]} - {course.timing[1]}<br />Bldg. <span className={styles.bold}>{course.building}</span> - Room: <span className={styles.bold}>{course.room}</span></p>
                   </div>
                 </>

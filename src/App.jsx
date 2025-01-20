@@ -44,7 +44,7 @@ function App() {
       {schedule.status != "empty" &&
         <section className='step'>
           <h2 id='step3'>Step <span>3</span></h2>
-          <p className='instructions'>Click a course to change it's color if you want, then screenshot the schedule when you're done.</p>
+          <p className='instructions'>Click a course to change it's color if you want, then click the same course again to close the color change mini-window,<br/>then screenshot the schedule when you're done.</p>
           {/* Schedule generation */}
           <Schedule scheduleData={scheduleText} />
         </section>
