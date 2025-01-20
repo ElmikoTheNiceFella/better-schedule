@@ -11,6 +11,25 @@ function indexOfSemester(string) {
   if (string.includes("Winter")) return string.indexOf("Winter")
 }
 
+export const getCoursesNames = (data) => {
+  const regexes = [/Fall|Spring|Summer|Winter/, /[A-Z]{4,5}\s[0-9]{3}/]
+  let courseNames = []
+
+  let course = []
+
+  for (let line of data.split("\n")) {
+    if (regexes[0].test(line)) {
+      course.push(line.substring(0, indexOfSemester(line)).trim())
+    } else if (regexes[1].test(line)) {
+      course.push(line.split("/").map(x => x.trim())[1])
+      courseNames.push(course)
+      course = []
+    }
+  }
+  
+  return courseNames
+}
+
 export const getCourseData = (data) => {
   const regexes = {
     name: /Fall|Spring|Summer|Winter/,
@@ -188,5 +207,6 @@ const toAmPM = (timing) => {
 }
 
 getCourseData(DEMO)
+console.log(getCoursesNames(DEMO))
 // console.log(getMinTiming(getCourseData(DEMO)))
 // console.log(getBackgroundTimings(getMinTiming(getCourseData(DEMO))[1], getScheduleHeight(getCourseData(DEMO))[1], 100))

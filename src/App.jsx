@@ -35,7 +35,7 @@ function App() {
           <h2>Step <span>2</span></h2>
           <p className='instructions'>Click the generate button</p>
           <div className='input-container'>
-            <a href="#schedule" id='generate' onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</a>
+            <a href="#step3" id='generate' onClick={handleGenerate} style={{ width: "200px", height: "50px" }}>Generate</a>
           </div>
         </section>
       }
@@ -43,8 +43,8 @@ function App() {
       {/* Step 3 */}
       {schedule.status != "empty" &&
         <section className='step'>
-          <h2>Step <span>3</span></h2>
-          <p className='instructions'>Screenshot the Schedule, if you didn't get a proper schedule or want to try again please reload the page.</p>
+          <h2 id='step3'>Step <span>3</span></h2>
+          <p className='instructions'>Click a course to change it's color if you want, then screenshot the schedule when you're done.</p>
           {/* Schedule generation */}
           <Schedule scheduleData={scheduleText} />
         </section>

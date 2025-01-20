@@ -44,7 +44,7 @@ textarea {
   padding: 12px;
   border: 2px solid #343a40;
 }
-#generate {
+button, #generate {
   all: unset;
   cursor: pointer;
   background-color: #8e1837;
@@ -53,4 +53,8 @@ textarea {
   font-size: large;
   display: grid;
   place-content: center;
+  margin: auto;
+}
+button {
+  margin-bottom: 24px;
 }
