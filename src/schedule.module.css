@@ -62,8 +62,6 @@
   bottom: -1px;
 }
 .colorChange {
-  /* grid-template-columns: repeat(1fr, 4);
-  grid-template-rows: repeat(1fr, 2); */
   width: 200px;
   height: 80px;
   z-index: 4;

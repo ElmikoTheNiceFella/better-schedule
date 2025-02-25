@@ -1,4 +1,4 @@
-import { COLORS, DAYS, DEMO } from "./constants.js";
+import { COLORS, DAYS, DEMO, RAMADAN_HOURS } from "./constants.js";
 
 /* ------------- */
 /* MAIN FUNCTION */
@@ -9,25 +9,6 @@ function indexOfSemester(string) {
   if (string.includes("Fall")) return string.indexOf("Fall")
   if (string.includes("Summer")) return string.indexOf("Summer")
   if (string.includes("Winter")) return string.indexOf("Winter")
-}
-
-export const getCoursesNames = (data) => {
-  const regexes = [/Fall|Spring|Summer|Winter/, /[A-Z]{4,5}\s[0-9]{3}/]
-  let courseNames = []
-
-  let course = []
-
-  for (let line of data.split("\n")) {
-    if (regexes[0].test(line)) {
-      course.push(line.substring(0, indexOfSemester(line)).trim())
-    } else if (regexes[1].test(line)) {
-      course.push(line.split("/").map(x => x.trim())[1])
-      courseNames.push(course)
-      course = []
-    }
-  }
-
-  return courseNames
 }
 
 export const getCourseData = (data, ramadan = false) => {
@@ -50,7 +31,6 @@ export const getCourseData = (data, ramadan = false) => {
   let courseData = {};
 
   for (let line of data.split("\n")) {
-    console.log(line)
     line = line.trim()
     if (line.length <= 0) continue
     if (regexes.name.test(line)) {
@@ -66,7 +46,6 @@ export const getCourseData = (data, ramadan = false) => {
         for (let day of courseDays) {
           schedule[day].push(courseData)
         }
-        console.log(courseData)
         courseData = {}
       }
       // Get course name
@@ -80,7 +59,8 @@ export const getCourseData = (data, ramadan = false) => {
       courseDays = info[0].trim().split(",").map((x) => DAYS[x])
       // Get Timing
       info.shift()
-      courseData.timing = info.join("").split("-").map((x) => toAmPM(x))
+      const formattedTiming = info.join("").split("-").map((x) => toAmPM(x))
+      courseData.timing = ramadan ? ramadanTiming(formattedTiming) : formattedTiming;
     } else if (regexes.roomBuilding.test(line)) {
       // Get Room & Building
       const info = line.split(" ")
@@ -112,7 +92,6 @@ export const getCourseData = (data, ramadan = false) => {
 
 // Calculating margins & heights
 const marginHeightCalculator = (timing) => {
-  console.log(timing)
   const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 
@@ -206,7 +185,58 @@ const toAmPM = (timing) => {
   return String(hours).padStart(2, '0') + timing.substring(2, timing.length) + suffix
 }
 
+function convertTo24Hour(time) {
+  let [_, hours, minutes, period] = time.match(/(\d{2}):(\d{2})(AM|PM)/);
+  hours = parseInt(hours);
+  minutes = parseInt(minutes);
+  if (period === "PM" && hours !== 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+  return [ hours, minutes ] // hours * 60 + minutes; Convert time to total minutes
+}
+
+function convertTo12Hour(hours, minutes) {
+  let period = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12; // Convert 0 to 12 for AM times
+  let formattedMinutes = String(minutes).padStart(2, "0");
+  return `${hours}:${formattedMinutes}${period}`;
+}
+
+function calculateMinutesBetween(startTime, endTime) {
+
+  let [ startHours, startMins ] = convertTo24Hour(startTime);
+  console.log(startHours, startMins)
+  let startMinutes = startHours * 60 + startMins
+  
+  let [ endHours, endMins ] = convertTo24Hour(endTime);
+  let endMinutes = endHours * 60 + endMins
+
+  console.log(endMinutes, startMinutes)
+
+  return Math.abs(endMinutes - startMinutes); // Return absolute difference
+}
+
+const ramadanDuration = (mins) => mins > 75 ? 170 : mins;
+
+export const ramadanTiming = (timing, day) => {
+  const STT = ["Sunday", "Tuesday", "Thursday"]
+  const key = STT.includes(day) ? "STT" : "MW";
+
+  console.log(timing)
+  const duration = calculateMinutesBetween(timing[0], timing[1])
+  const isLab = duration > 75 // Minutes
+  console.log(isLab, duration, timing[0], RAMADAN_HOURS[key][timing[0]])
+  if (RAMADAN_HOURS[key][timing[0]] && (isLab) == (timing[0] == "03:30PM")) {
+    const startTime = RAMADAN_HOURS[key][timing[0]]
+    let [ hours, minutes ] = convertTo24Hour(startTime)
+    let totalMinutes = hours * 60 + minutes + ramadanDuration(duration);
+    let newHours = Math.floor(totalMinutes / 60);
+    let newMinutes = totalMinutes % 60;
+    const endTime = convertTo12Hour(newHours, newMinutes);
+    return [startTime, endTime]
+  }
+  return timing
+}
+
 getCourseData(DEMO)
-console.log(getCoursesNames(DEMO))
 // console.log(getMinTiming(getCourseData(DEMO)))
 // console.log(getBackgroundTimings(getMinTiming(getCourseData(DEMO))[1], getScheduleHeight(getCourseData(DEMO))[1], 100))

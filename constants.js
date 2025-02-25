@@ -15,6 +15,21 @@ const DAYS = {
    "Thu": "Thursday"
 }
 
+const RAMADAN_HOURS = {
+  "STT": {
+    "05:00PM": "08:00PM",
+    "06:00PM": "09:00PM",
+    "07:00PM": "10:00PM",
+    "03:30PM": "08:00PM"
+  },
+  "MW": {
+    "05:00PM": "08:00PM",
+    "06:30PM": "09:30PM",
+    "03:30PM": "08:00PM"
+  }
+};
+
+
 const DEMO = `
     Arabic Language II Spring 2025 - 2024 - 1
     ARAB 200/ Lecture/ L18 ( Standard Letter )
@@ -60,4 +75,4 @@ const DEMO = `
 
 const TUTORIAL_LINK = "https://youtu.be/8JiQRGCsvWY"
 
-export { COLORS, DEMO, DAYS,TUTORIAL_LINK }
+export { COLORS, DEMO, DAYS,TUTORIAL_LINK, RAMADAN_HOURS }
