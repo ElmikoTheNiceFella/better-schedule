@@ -11,7 +11,30 @@ function indexOfSemester(string) {
   if (string.includes("Winter")) return string.indexOf("Winter")
 }
 
-export const getCourseData = (data, ramadan = false) => {
+function splitLectureAndLab(data) {
+  const lines = data.split("\n")
+  let newData = ""
+  for(let i = 0; i < lines.length; i++) {
+    if (lines[i].includes("Lecture") && lines[i].includes("Lab")) {
+      let line = lines[i].split("/")
+      line.splice(2, 1)
+      newData += line.join("/") +"\n"
+      line[1] = "Lab"
+      newData += lines[i+4]+"\n"+lines[i+5]+"\n"
+      newData += lines[i-1]+"\n"
+      newData += line.join("/") +"\n"
+      newData += lines[i+2]+"\n"+lines[i+3]+"\n"
+      i+=5
+    } else {
+      newData += lines[i]+"\n"
+    }
+  }
+  return newData
+}
+
+export const getCourseData = (rawData, ramadan = false) => {
+  const data = splitLectureAndLab(rawData)
+
   const regexes = {
     name: /Fall|Spring|Summer|Winter/,
     codeType: /[A-Z]{4,5}\s[0-9]{3}/,
@@ -52,7 +75,7 @@ export const getCourseData = (data, ramadan = false) => {
       courseData.name = line.substring(0, indexOfSemester(line)).trim()
     } else if (regexes.codeType.test(line)) {
       // Get Type & Section
-      courseData.type = line.split("/").map(x => x.trim())[1]
+      courseData.type = line.split("/").map(x => x.trim())[1] + (line.split("/").length > 3 ? " | "+line.split("/").map(x => x.trim())[2]:"")
     } else if (regexes.daysTiming.test(line)) {
       // Get days of the course
       const info = line.split(" ")
@@ -191,7 +214,7 @@ function convertTo24Hour(time) {
   minutes = parseInt(minutes);
   if (period === "PM" && hours !== 12) hours += 12;
   if (period === "AM" && hours === 12) hours = 0;
-  return [ hours, minutes ] // hours * 60 + minutes; Convert time to total minutes
+  return [hours, minutes] // hours * 60 + minutes; Convert time to total minutes
 }
 
 function convertTo12Hour(hours, minutes) {
@@ -203,11 +226,11 @@ function convertTo12Hour(hours, minutes) {
 
 function calculateMinutesBetween(startTime, endTime) {
 
-  let [ startHours, startMins ] = convertTo24Hour(startTime);
+  let [startHours, startMins] = convertTo24Hour(startTime);
   console.log(startHours, startMins)
   let startMinutes = startHours * 60 + startMins
-  
-  let [ endHours, endMins ] = convertTo24Hour(endTime);
+
+  let [endHours, endMins] = convertTo24Hour(endTime);
   let endMinutes = endHours * 60 + endMins
 
   console.log(endMinutes, startMinutes)
@@ -227,7 +250,7 @@ export const ramadanTiming = (timing, day) => {
   console.log(isLab, duration, timing[0], RAMADAN_HOURS[key][timing[0]])
   if (RAMADAN_HOURS[key][timing[0]] && (isLab) == (timing[0] == "03:30PM")) {
     const startTime = RAMADAN_HOURS[key][timing[0]]
-    let [ hours, minutes ] = convertTo24Hour(startTime)
+    let [hours, minutes] = convertTo24Hour(startTime)
     let totalMinutes = hours * 60 + minutes + ramadanDuration(duration);
     let newHours = Math.floor(totalMinutes / 60);
     let newMinutes = totalMinutes % 60;
