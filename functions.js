@@ -17,9 +17,7 @@ function splitLectureAndLab(data) {
   for(let i = 0; i < lines.length; i++) {
     if (lines[i].includes("Lecture") && lines[i].includes("Lab")) {
       let line = lines[i].split("/")
-      line.splice(2, 1)
       newData += line.join("/") +"\n"
-      line[1] = "Lab"
       newData += lines[i+4]+"\n"+lines[i+5]+"\n"
       newData += lines[i-1]+"\n"
       newData += line.join("/") +"\n"
