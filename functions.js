@@ -165,7 +165,6 @@ export function getScheduleHeight(schedule) {
 
   for (let day of Object.keys(schedule)) {
     for (let course of schedule[day]) {
-      console.log(course.timing[1], timingToNum(course.timing[1]))
       if (counter == 0 || maxTiming < timingToNum(course.timing[1])) {
         maxTiming = timingToNum(course.timing[1])
         endTime = course.timing[1]
@@ -193,13 +192,13 @@ function numToTiming(num, offset) {
 }
 
 export function getBackgroundTimings(startTime, endTime, offset = 100) {
-  console.log(startTime, endTime)
+  let limit = 1
+  if (startTime.split(":")[1].substring(0, 2) === "30") limit = 0
   let duration = timingToNum(endTime) - timingToNum(startTime)
   let counter = 1;
   let finalTimings = [numToTiming(timingToNum(endTime), offset)]
   endTime = numToTiming(timingToNum(endTime), offset)[0]
-
-  while (duration > 0) {
+  while (duration > limit) {
     finalTimings.unshift(numToTiming(timingToNum(endTime) - counter, offset))
     counter++
     duration--
