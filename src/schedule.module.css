@@ -3,6 +3,7 @@
   display: flex;
   width: fit-content;
   margin: auto;
+  margin-bottom: 32px;
 }
 .day {
   width: 200px;

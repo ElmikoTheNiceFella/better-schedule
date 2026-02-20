@@ -32,6 +32,25 @@ p {
 .instructions {
   padding: 0px 24px;
 }
+.settings {
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #f2eced;
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 32px;
+  div {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 100px;
+    label {
+      color: #343a40;
+    }
+  }
+}
 a:active, a:visited, a {
   color: #8e1837;
 }

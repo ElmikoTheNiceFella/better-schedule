@@ -30,6 +30,10 @@ function splitLectureAndLab(data) {
   return newData
 }
 
+function infoCheck(courseData) {
+  return courseData.name && courseData.type && courseData.timing && courseData.room && courseData.building
+}
+
 export const getCourseData = (rawData, ramadan = false) => {
   const data = splitLectureAndLab(rawData)
 
@@ -56,10 +60,11 @@ export const getCourseData = (rawData, ramadan = false) => {
     if (line.length <= 0) continue
     if (regexes.name.test(line)) {
       // --- Push Each Course Data To The Schedule ---
-      if (courseDays.length > 0) {
+      if (courseDays.length > 0 && infoCheck(courseData)) {
         // Get margin & height
-        [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
-
+        const [margin, height] = marginHeightCalculator(courseData.timing)
+        courseData.margin = margin
+        courseData.height = height
         // Get color
         courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
 
@@ -92,13 +97,16 @@ export const getCourseData = (rawData, ramadan = false) => {
   // --- Conclude Course Data ---
   if (courseDays.length > 0) {
     // Get margin & height
-    [courseData.margin, courseData.height] = marginHeightCalculator(courseData.timing)
+    const [margin, height] = marginHeightCalculator(courseData.timing)
+    courseData.margin = margin
+    courseData.height = height
 
     // Get color
     courseData.color = COLORS[courseData.building] ? COLORS[courseData.building] : "#8e1837"
 
     // Add the course to the schedule
     for (let day of courseDays) {
+      if (courseData.margin == -1 || courseData.height == -1) continue
       schedule[day].push(courseData)
     }
     courseData = {}
@@ -112,7 +120,9 @@ export const getCourseData = (rawData, ramadan = false) => {
 /* ---------------- */
 
 // Calculating margins & heights
-const marginHeightCalculator = (timing) => {
+function marginHeightCalculator(timing) {
+  if (!timing) return [-1, -1]
+  console.log(timing)
   const margin = timingToNum(timing[0])
   const height = timingToNum(timing[1]) - margin
 
@@ -121,10 +131,10 @@ const marginHeightCalculator = (timing) => {
 
 function timingToNum(timing) {
   timing = toAmPM(timing)
-  let hours = +timing.substring(0, 2);
-  let minutes = +timing.substring(3, 5) / 60;
+  let hours = +timing.split(":")[0];
+  let minutes = +timing.split(":")[1].substring(0, 2) / 60;
 
-  if (timing.substring(5, 7) == "PM" && hours != 12) hours += 12
+  if (timing.substring(timing.length-2, timing.length) == "PM" && hours != 12) hours += 12
 
   return hours + minutes
 }
@@ -155,6 +165,7 @@ export function getScheduleHeight(schedule) {
 
   for (let day of Object.keys(schedule)) {
     for (let course of schedule[day]) {
+      console.log(course.timing[1], timingToNum(course.timing[1]))
       if (counter == 0 || maxTiming < timingToNum(course.timing[1])) {
         maxTiming = timingToNum(course.timing[1])
         endTime = course.timing[1]
@@ -182,12 +193,13 @@ function numToTiming(num, offset) {
 }
 
 export function getBackgroundTimings(startTime, endTime, offset = 100) {
+  console.log(startTime, endTime)
   let duration = timingToNum(endTime) - timingToNum(startTime)
   let counter = 1;
   let finalTimings = [numToTiming(timingToNum(endTime), offset)]
   endTime = numToTiming(timingToNum(endTime), offset)[0]
 
-  while (duration > 1) {
+  while (duration > 0) {
     finalTimings.unshift(numToTiming(timingToNum(endTime) - counter, offset))
     counter++
     duration--
@@ -258,6 +270,4 @@ export const ramadanTiming = (timing, day) => {
   return timing
 }
 
-getCourseData(DEMO)
-// console.log(getMinTiming(getCourseData(DEMO)))
-// console.log(getBackgroundTimings(getMinTiming(getCourseData(DEMO))[1], getScheduleHeight(getCourseData(DEMO))[1], 100))
+console.log(getCourseData(DEMO))

@@ -9,6 +9,7 @@ function App() {
   const [scheduleText, setScheduleText] = useState("")
   const [schedule, setSchedule] = useState({ status: "empty" })
   const [isRamadan, setIsRamadan] = useState(false)
+  const [heightRatio, setHeightRatio] = useState(100)
 
   const handleGenerate = () => setSchedule(getCourseData(scheduleText, isRamadan))
 
@@ -45,10 +46,13 @@ function App() {
       {schedule.status != "empty" &&
         <section className='step'>
           <h2 id='step3'>Step <span>3</span></h2>
-          <p className='instructions'>Click a course to change it's color if you want, then click the same course again to close the color change mini-window,<br/>then screenshot the schedule when you're done.<br/><br/>
-            <input id='is-ramadan' type='checkbox' value={isRamadan} onChange={() => setIsRamadan(p => !p)} /><label htmlFor='is-ramadan'>&nbsp;Ramadan schedule</label></p>
+          <p className='instructions'>Click a course to change it's color if you want, then click the same course again to close the color change mini-window,<br/>then screenshot the schedule when you're done.</p>
+            <div className='settings'>
+              <div><input id='is-ramadan' type='checkbox' value={isRamadan} onChange={() => setIsRamadan(p => !p)} /><label htmlFor='is-ramadan'>&nbsp;Ramadan schedule</label></div>
+              <div><input type="number" name="height-ratio" id="height-ratio" value={heightRatio} onChange={(e) => setHeightRatio(e.target.value)} /><label htmlFor='height-ratio'>&nbsp;Schedule Height</label></div>
+            </div>
           {/* Schedule generation */}
-          <Schedule scheduleData={scheduleText} isRamadan={isRamadan}  />
+          <Schedule scheduleData={scheduleText} isRamadan={isRamadan} heightRatio={heightRatio} />
         </section>
       }
     </>
