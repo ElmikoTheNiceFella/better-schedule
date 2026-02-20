@@ -48,7 +48,7 @@ const Schedule = ({ scheduleData, isRamadan, heightRatio }) => {
                     {/* Color change */}
                     <div key={course.timing[0] + `${k} color`} style={{ 
                       border: "1px solid #343a40", 
-                      top: (course.margin * heightRatio) - minTimingMargin - 80, 
+                      top: (course.margin * heightRatio) - minTimingMargin * (heightRatio/100) - 80, 
                       display: (j*13)+k == activeCourse ? "flex" : "none", 
                       flexWrap: "wrap" }} className={styles.colorChange}>
                         {colors.map((color, idx) => 
